@@ -1,0 +1,33 @@
+{
+  "contract_name": "PrimeFactors",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x60606040523415600e57600080fd5b5b5b5b603680601e6000396000f30060606040525b600080fd00a165627a7a72305820bee4a12ded5e73efbf60b5eaa850cea2cc55caa582162e91413e2018e7f22ca90029",
+  "networks": {
+    "1503674863790": {
+      "events": {},
+      "links": {},
+      "address": "0x0204d58e23c88546f1a19595ffec4f30b689e17a",
+      "updated_at": 1503677248885
+    },
+    "1503677435820": {
+      "events": {},
+      "links": {},
+      "address": "0x2b5a79cb9b5512f9a0d67273f64820e4f9e25092",
+      "updated_at": 1503677484173
+    },
+    "1503678023897": {
+      "events": {},
+      "links": {},
+      "address": "0x91ed8b3fae30279ce7aecfbb10d33ad08c79ced8",
+      "updated_at": 1503678235092
+    }
+  },
+  "schema_version": "0.0.5",
+  "updated_at": 1503678235092
+}
