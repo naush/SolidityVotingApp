@@ -1,33 +1,42 @@
 pragma solidity ^0.4.2;
 
 import "truffle/Assert.sol";
-import "truffle/DeployedAddresses.sol";
 import "../contracts/Voting.sol";
 
 contract TestVoting {
   bytes32[] candidateNames;
+  Voting machine;
 
-  function testValidCandidate() {
+  function beforeAll() {
     candidateNames.push("Rama");
-    Voting instance = new Voting(candidateNames);
-    Assert.equal(true, instance.validCandidate("Rama"), "Candidate name should be valid");
+    machine = new Voting(candidateNames);
+  }
+
+  function testCandidatesAreAdded() {
+    bytes32 candidateName = machine.candidateList(0);
+    Assert.equal("Rama", candidateName, "Candidate names are added to list");
+  }
+
+  function testValidCandidateIsTrue() {
+    Assert.isTrue(machine.validCandidate("Rama"), "Candidate name should be valid");
   }
 
   function testTotalVotesForCandidate() {
-    candidateNames.push("Rama");
-    Voting instance = new Voting(candidateNames);
     uint expected = 0;
-    Assert.equal(expected, instance.totalVotesFor("Rama"), "Total votes for a new candidate should be zero");
+    Assert.equal(expected, machine.totalVotesFor("Rama"), "Total votes for a new candidate should be zero");
   }
 
   function testVoteForCandidate() {
-    candidateNames.push("Rama");
-    Voting instance = new Voting(candidateNames);
-
-    instance.voteForCandidate("Rama");
+    machine.voteForCandidate("Rama");
 
     uint expected = 1;
-    Assert.equal(expected, instance.totalVotesFor("Rama"), "Total votes for a new candidate should be zero");
+    Assert.equal(expected, machine.totalVotesFor("Rama"), "Total votes for a new candidate should be one");
+  }
+
+  function testVoteForInvalidCandidate() {
+    machine.voteForCandidate("John");
+
+    uint expected = 0;
+    Assert.equal(expected, machine.totalVotesFor("John"), "Total votes for a new candidate should be zero");
   }
 }
-
