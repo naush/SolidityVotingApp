@@ -1,4 +1,4 @@
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.11;
 
 import "truffle/Assert.sol";
 import "../contracts/Voting.sol";
@@ -8,35 +8,29 @@ contract TestVoting {
   Voting machine;
 
   function beforeAll() {
-    candidateNames.push("Rama");
+    candidateNames.push("Fabrice");
     machine = new Voting(candidateNames);
   }
 
   function testCandidatesAreAdded() {
-    bytes32 candidateName = machine.candidateList(0);
-    Assert.equal("Rama", candidateName, "Candidate names are added to list");
+    Assert.equal("Fabrice", machine.candidateList(0), "First candidate should be Fabrice");
   }
 
   function testValidCandidateIsTrue() {
-    Assert.isTrue(machine.validCandidate("Rama"), "Candidate name should be valid");
+    Assert.isTrue(machine.validCandidate("Fabrice"), "Fabrice should be valid");
   }
 
   function testTotalVotesForCandidate() {
-    uint expected = 0;
-    Assert.equal(expected, machine.totalVotesFor("Rama"), "Total votes for a new candidate should be zero");
-  }
+    uint8 totalVotes = machine.totalVotesFor("Fabrice");
+    Assert.isTrue(totalVotes == 0, "Total votes should be zero for a new candidate");
 
-  function testVoteForCandidate() {
-    machine.voteForCandidate("Rama");
+    machine.voteForCandidate("Fabrice");
+    totalVotes = machine.totalVotesFor("Fabrice");
 
-    uint expected = 1;
-    Assert.equal(expected, machine.totalVotesFor("Rama"), "Total votes for a new candidate should be one");
+    Assert.isTrue(totalVotes == 1, "Total votes should be one after one vote");
   }
 
   function testVoteForInvalidCandidate() {
-    machine.voteForCandidate("John");
-
-    uint expected = 0;
-    Assert.equal(expected, machine.totalVotesFor("John"), "Total votes for a new candidate should be zero");
+    Assert.isFalse(machine.validCandidate("Alexandre"), "Alexandre should be invalid");
   }
 }
